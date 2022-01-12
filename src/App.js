@@ -1,13 +1,13 @@
 import React, { useContext, useEffect } from 'react';
-// 0x18C47606E644Bb869063c40E6105Eae32449BDD3 NFTCollection
-// NFTMarketplace 0x7F144aAB76c1EE894eE6eFbe02ED307DADc34382
+// 0xB02C985d93f420aE6fDe7BF7bF4E5B7068535733 BNBCollection
+// NFTMarketplace 0x79e1A2244ab116892678fe7b2EabE9659713123f
 import web3 from './connection/web3';
 import Navbar from './components/Layout/Navbar';
 import Main from './components/Content/Main';
 import Web3Context from './store/web3-context';
 import CollectionContext from './store/collection-context';
 import MarketplaceContext from './store/marketplace-context'
-import NFTCollection from './abis/NFTCollection.json';
+import NFTCollection from './abis/BNBCollection.json';
 import NFTMarketplace from './abis/NFTMarketplace.json';
 
 const App = () => {

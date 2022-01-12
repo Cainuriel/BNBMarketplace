@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./NFTCollection.sol";
+import "./BNBCollection.sol";
 
 contract NFTMarketplace {
   uint public offerCount;
   mapping (uint => _Offer) public offers;
   mapping (address => uint) public userFunds;
-  NFTCollection nftCollection;
+  BNBCollection nftCollection;
   
   struct _Offer {
     uint offerId;
@@ -32,7 +32,7 @@ contract NFTMarketplace {
   event ClaimFunds(address user, uint amount);
 
   constructor(address _nftCollection) {
-    nftCollection = NFTCollection(_nftCollection);
+    nftCollection = BNBCollection(_nftCollection);
   }
   
   function makeOffer(uint _id, uint _price) public {

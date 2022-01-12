@@ -13,6 +13,9 @@ const MintForm = () => {
   const [enteredDescription, setEnteredDescription] = useState('');
   const [nameIsValid, setNameIsValid] = useState(true);
 
+  const [enteredRarity, setEnteredRarity] = useState('');
+  const [rarityIsValid, setRarityIsValid] = useState(true);
+
   const [capturedFileBuffer, setCapturedFileBuffer] = useState(null);
   const [fileIsValid, setFileIsValid] = useState(true);
 
@@ -22,9 +25,13 @@ const MintForm = () => {
   const enteredNameHandler = (event) => {
     setEnteredName(event.target.value);
   };
-
+  
   const enteredDescriptionHandler = (event) => {
     setEnteredDescription(event.target.value);
+  };
+
+  const enteredRarityHandler = (event) => {
+    setEnteredRarity(event.target.value);
   };
   
   const captureFile = (event) => {
@@ -44,9 +51,10 @@ const MintForm = () => {
 
     enteredName ? setNameIsValid(true) : setNameIsValid(false);
     enteredDescription ? setDescriptionIsValid(true) : setDescriptionIsValid(false);
+    enteredRarity ? setRarityIsValid(true) : setRarityIsValid(false);
     capturedFileBuffer ? setFileIsValid(true) : setFileIsValid(false);
 
-    const formIsValid = enteredName && enteredDescription && capturedFileBuffer;
+    const formIsValid = enteredName && enteredDescription && enteredRarity && capturedFileBuffer;
 
     // Upload file to IPFS and push to the blockchain
     const mintNFT = async() => {
@@ -68,6 +76,10 @@ const MintForm = () => {
           description: {
             type: "string",
             description: enteredDescription
+          },
+          rarity: {
+            type: "string",
+            description: enteredRarity
           },
           image: {
             type: "string",
@@ -97,6 +109,7 @@ const MintForm = () => {
 
   const nameClass = nameIsValid? "form-control" : "form-control is-invalid";
   const descriptionClass = descriptionIsValid? "form-control" : "form-control is-invalid";
+  const rarityClass = rarityIsValid? "form-control" : "form-control is-invalid";
   const fileClass = fileIsValid? "form-control" : "form-control is-invalid";
   
   return(
@@ -106,7 +119,7 @@ const MintForm = () => {
           <input
             type='text'
             className={`${nameClass} mb-1`}
-            placeholder='Nombre...'
+            placeholder='Nombre del NFT...'
             value={enteredName}
             onChange={enteredNameHandler}
           />
@@ -115,9 +128,18 @@ const MintForm = () => {
           <input
             type='text'
             className={`${descriptionClass} mb-1`}
-            placeholder='Descripción...'
+            placeholder='Descripción breve del NTF...'
             value={enteredDescription}
             onChange={enteredDescriptionHandler}
+          />
+        </div>
+        <div className="col-md-4">
+          <input
+            type='text'
+            className={`${rarityClass} mb-1`}
+            placeholder='Nº de serie. Ejem: #4 de 10, Único... '
+            value={enteredRarity}
+            onChange={enteredRarityHandler}
           />
         </div>
         <div className="col-md-2">

@@ -112,6 +112,7 @@ const CollectionProvider = props => {
         collection = [{
           id: i + 1,
           title: metadata.properties.name.description,
+          rarity: metadata.properties.rarity.description,
           img: metadata.properties.image.description,
           owner: owner
         }, ...collection];
@@ -125,6 +126,7 @@ const CollectionProvider = props => {
   const updateCollectionHandler = async(contract, id, owner) => {
     let NFT;
     const hash = await contract.methods.tokenURI(id).call();
+    console.log('ahi esta ahi esta ', `https://ipfs.infura.io/ipfs/${hash}?clear`);
     try {
       const response = await fetch(`https://ipfs.infura.io/ipfs/${hash}?clear`);
       if(!response.ok) {
@@ -135,6 +137,7 @@ const CollectionProvider = props => {
       NFT = {
         id: parseInt(id),
         title: metadata.properties.name.description,
+        rarity: metadata.properties.rarity.description,
         img: metadata.properties.image.description,
         owner: owner
       };
