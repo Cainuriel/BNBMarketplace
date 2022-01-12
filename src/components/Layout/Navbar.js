@@ -59,12 +59,11 @@ const Navbar = () => {
   return (
   <nav className="navbar navbar-dark bg-dark">
     <div class="container-fluid">    
-      <div className="d-flex">
-      {web3Ctx.account && 
-      <div className="nav-item">
-        <h3 className="text-white">Bienvenido: </h3>
-      </div> }
-        <div className="nav-item">
+        {web3Ctx.account && 
+        <div className="navbar-brand">
+          <h3 className="text-white">¡Bienvenido Malandriner! </h3>
+        </div> }
+        <div className="navbar-toggler">
           {marketplaceCtx.userFunds > 0 && !fundsLoading &&
             <button 
               type="button" 
@@ -80,15 +79,14 @@ const Navbar = () => {
               </div>
           </div>}          
         </div>
-        <div className="nav-item">
+        <div className="navbar-toggler">
           {web3Ctx.account && 
             <a 
               className="nav-link small" 
               href={`${etherscanUrl}/address/${web3Ctx.account}`}
               target="blank"
               rel="noopener noreferrer"
-            >
-              {web3Ctx.account}
+            > {`${web3Ctx.account.substr(0,7)}...${web3Ctx.account.substr(web3Ctx.account.length - 7)}`}
             </a>}
           {!web3Ctx.account && 
             <button 
@@ -99,9 +97,9 @@ const Navbar = () => {
               Connect your wallet
             </button>}
         </div>
-      </div>
     </div>  
   </nav>
+  
   );  
 };
 
