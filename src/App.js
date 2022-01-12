@@ -108,7 +108,7 @@ const App = () => {
         });
         
       } else {
-        window.alert('NFTMarketplace contract not deployed to detected network.')
+        window.alert('Cambie la red que dispone en su Metamask a la testnet de Binance Smart Chain para poder interactuar con la Daap')
       }
 
       collectionCtx.setNftIsLoading(false);

@@ -57,9 +57,14 @@ const Navbar = () => {
   }
   
   return (
-    <nav className="navbar navbar-expand-sm navbar-light bg-white p-0">      
-      <ul className="navbar-nav ms-auto">
-        <li className="nav-item">
+  <nav className="navbar navbar-dark bg-dark">
+    <div class="container-fluid">    
+      <div className="d-flex">
+      {web3Ctx.account && 
+      <div className="nav-item">
+        <h3 className="text-white">Bienvenido: </h3>
+      </div> }
+        <div className="nav-item">
           {marketplaceCtx.userFunds > 0 && !fundsLoading &&
             <button 
               type="button" 
@@ -74,11 +79,11 @@ const Navbar = () => {
                 <span class="sr-only"></span>
               </div>
           </div>}          
-        </li>
-        <li className="nav-item">
+        </div>
+        <div className="nav-item">
           {web3Ctx.account && 
             <a 
-              className="nav-link small address" 
+              className="nav-link small" 
               href={`${etherscanUrl}/address/${web3Ctx.account}`}
               target="blank"
               rel="noopener noreferrer"
@@ -93,9 +98,10 @@ const Navbar = () => {
             > 
               Connect your wallet
             </button>}
-        </li>
-      </ul>
-    </nav>
+        </div>
+      </div>
+    </div>  
+  </nav>
   );  
 };
 
