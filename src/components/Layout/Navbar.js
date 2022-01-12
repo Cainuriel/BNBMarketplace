@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-
+import '../../app.css';
 import Web3Context from '../../store/web3-context';
 import MarketplaceContext from '../../store/marketplace-context';
 import web3 from '../../connection/web3';
@@ -78,7 +78,7 @@ const Navbar = () => {
         <li className="nav-item">
           {web3Ctx.account && 
             <a 
-              className="nav-link small" 
+              className="nav-link small address" 
               href={`${etherscanUrl}/address/${web3Ctx.account}`}
               target="blank"
               rel="noopener noreferrer"
