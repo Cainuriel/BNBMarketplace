@@ -106,7 +106,7 @@ const MintForm = () => {
           <input
             type='text'
             className={`${nameClass} mb-1`}
-            placeholder='Name...'
+            placeholder='Nombre...'
             value={enteredName}
             onChange={enteredNameHandler}
           />
@@ -115,7 +115,7 @@ const MintForm = () => {
           <input
             type='text'
             className={`${descriptionClass} mb-1`}
-            placeholder='Description...'
+            placeholder='Descripción...'
             value={enteredDescription}
             onChange={enteredDescriptionHandler}
           />
