@@ -107,7 +107,7 @@ const NFTCollection = () => {
                     <input
                       type="number"
                       step="0.01"
-                      placeholder="ETH..."
+                      placeholder="BNB..."
                       className="form-control"
                       ref={priceRefs.current[key]}
                     />
