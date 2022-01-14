@@ -53,7 +53,7 @@ const Navbar = () => {
   } else if(web3Ctx.networkId === 5) {
     etherscanUrl = 'https://goerli.etherscan.io'
   } else {
-    etherscanUrl = 'https://etherscan.io'
+    etherscanUrl = 'https://testnet.bscscan.com/'
   }
   
   return (
@@ -70,7 +70,7 @@ const Navbar = () => {
               className="btn btn-info btn-block navbar-btn text-white" 
               onClick={claimFundsHandler}
             >          
-              {`CLAIM ${formatPrice(marketplaceCtx.userFunds)} ETH`}
+              {`CLAIM ${formatPrice(marketplaceCtx.userFunds)} BNB`}
             </button>}
           {fundsLoading &&
             <div class="d-flex justify-content-center text-info">

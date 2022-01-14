@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-
+import '../../../app.css';
 import Web3Context from '../../../store/web3-context';
 import CollectionContext from '../../../store/collection-context';
 
@@ -15,6 +15,9 @@ const MintForm = () => {
 
   const [enteredRarity, setEnteredRarity] = useState('');
   const [rarityIsValid, setRarityIsValid] = useState(true);
+
+  const [enteredFiletype, setEnteredFiletype] = useState('');
+  const [FiletypeIsValid, setFiletypeIsValid] = useState(true);
 
   const [capturedFileBuffer, setCapturedFileBuffer] = useState(null);
   const [fileIsValid, setFileIsValid] = useState(true);
@@ -33,6 +36,10 @@ const MintForm = () => {
   const enteredRarityHandler = (event) => {
     setEnteredRarity(event.target.value);
   };
+
+  const enteredFiletypeHandler = (event) => {
+    setEnteredFiletype(event.target.value);
+  };
   
   const captureFile = (event) => {
     event.preventDefault();
@@ -44,7 +51,19 @@ const MintForm = () => {
     reader.onloadend = () => {
       setCapturedFileBuffer(Buffer(reader.result));     
     }
-  };  
+  };
+
+  const captureFile2 = (event) => {
+    event.preventDefault();
+
+    const file = event.target.files[0];
+
+    const reader = new window.FileReader();
+    reader.readAsArrayBuffer(file);
+    reader.onloadend = () => {
+      setCapturedFileBuffer(Buffer(reader.result));     
+    }
+  }; 
   
   const submissionHandler = (event) => {
     event.preventDefault();
@@ -53,8 +72,8 @@ const MintForm = () => {
     enteredDescription ? setDescriptionIsValid(true) : setDescriptionIsValid(false);
     enteredRarity ? setRarityIsValid(true) : setRarityIsValid(false);
     capturedFileBuffer ? setFileIsValid(true) : setFileIsValid(false);
-
-    const formIsValid = enteredName && enteredDescription && enteredRarity && capturedFileBuffer;
+    enteredFiletype ? setFiletypeIsValid(true) : setFiletypeIsValid(false);
+    const formIsValid = enteredName && enteredDescription && enteredRarity && enteredFiletype && capturedFileBuffer;
 
     // Upload file to IPFS and push to the blockchain
     const mintNFT = async() => {
@@ -81,7 +100,15 @@ const MintForm = () => {
             type: "string",
             description: enteredRarity
           },
+          filetype: {
+            type: "string",
+            description: enteredFiletype
+          },
           image: {
+            type: "string",
+            description: fileAdded.path
+          },
+          video: {
             type: "string",
             description: fileAdded.path
           }
@@ -110,7 +137,9 @@ const MintForm = () => {
   const nameClass = nameIsValid? "form-control" : "form-control is-invalid";
   const descriptionClass = descriptionIsValid? "form-control" : "form-control is-invalid";
   const rarityClass = rarityIsValid? "form-control" : "form-control is-invalid";
+  const fileTypeClass = FiletypeIsValid? "form-control" : "form-control is-invalid";
   const fileClass = fileIsValid? "form-control" : "form-control is-invalid";
+  const fileClass2 = fileIsValid? "form-control" : "form-control is-invalid";
   
   return(
     <form onSubmit={submissionHandler}>
@@ -143,10 +172,27 @@ const MintForm = () => {
           />
         </div>
         <div className="col-md-2">
+        <label>Seleccione el tipo de archivo</label>
+        <select className={`${fileTypeClass} mb-1`} onChange={enteredFiletypeHandler} value={enteredFiletype}>
+                  <option value="null">...</option>
+                  <option value="Imagen">Imagen</option>
+                  <option value="MP4">MP4</option>
+        </select>
+        </div>
+        <div className="col-md-2">
+        <label>Imagen</label>
           <input
             type='file'
             className={`${fileClass} mb-1`}
             onChange={captureFile}
+          />
+        </div>
+        <div className="col-md-2">
+          <label>Mp4</label>
+          <input
+            type='file'
+            className={`${fileClass2} mb-1`}
+            onChange={captureFile2}
           />
         </div>
       </div>

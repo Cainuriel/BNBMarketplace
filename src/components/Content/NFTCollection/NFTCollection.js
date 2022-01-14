@@ -61,23 +61,32 @@ const NFTCollection = () => {
  
   return(
     <div className="row text-center">
+     
       {collectionCtx.collection.map((NFT, key) => {
         const index = marketplaceCtx.offers ? marketplaceCtx.offers.findIndex(offer => offer.id === NFT.id) : -1;
         const owner = index === -1 ? NFT.owner : marketplaceCtx.offers[index].user;
         const price = index !== -1 ? formatPrice(marketplaceCtx.offers[index].price).toFixed(2) : null;
-       
+       console.log('objeto NFT', NFT); 
         return(
-          <div key={key} className="col-md-2 m-3 pb-3 card border-info">
+        
+          <div key={key} className="col-md-3 m-3 py-3 px-3 card border-info">
+            
+            <small>NFT Id: {NFT.id}</small>
+            <small className="">Rareza: {NFT.rarity}</small>
             <div className={"card-body"}>       
               <h3 className="card-title">{NFT.title}</h3>
-              <h4 className="">Id: {NFT.id}</h4>
-              <h5 className="">Rareza: {NFT.rarity}</h5>
+              
+              <p className="">{NFT.description}</p>
             </div>
-            <img src={`https://ipfs.infura.io/ipfs/${NFT.img}`} className="card-img-bottom" alt={`NFT ${key}`} />
-            <video width="400" autoPlay loop muted>
+            {NFT.filetype === "Imagen" ?
+            <img src={`https://ipfs.infura.io/ipfs/${NFT.img}`} className="card-img-bottom" alt={`${NFT.title}`} /> 
+            :
+            <video width="350" autoPlay loop muted>
                       <source src={`https://ipfs.infura.io/ipfs/${NFT.img}`} type="video/mp4"/>
-                    </video>                         
-            <p className="fw-light fs-6">{`${owner.substr(0,7)}...${owner.substr(owner.length - 7)}`}</p>
+                    </video> 
+            }
+            <label>Propietario:</label>
+            <p className="fw-light fs-6"> {`${owner.substr(0,7)}...${owner.substr(owner.length - 7)}`}</p>
             {index !== -1 ?
               owner !== web3Ctx.account ?
                 <div className="row">

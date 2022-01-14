@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
-// 0xB02C985d93f420aE6fDe7BF7bF4E5B7068535733 BNBCollection
-// NFTMarketplace 0x79e1A2244ab116892678fe7b2EabE9659713123f
+// 0x8e0F9405863fbb351CbC3e1487853c8c56Cf5822 BNBCollection
+// NFTMarketplace 0xeC5f0EA9d0b90B8419DC34f35b34A344Cf69B6E8
 import web3 from './connection/web3';
 import Navbar from './components/Layout/Navbar';
 import Main from './components/Content/Main';

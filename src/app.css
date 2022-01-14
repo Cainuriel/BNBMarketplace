@@ -1,4 +1,9 @@
 body {
     background-color:coral;
+    height: 100vh;
+}
+
+.red {
+    color: red;
 }
 

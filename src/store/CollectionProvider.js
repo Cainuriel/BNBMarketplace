@@ -112,8 +112,11 @@ const CollectionProvider = props => {
         collection = [{
           id: i + 1,
           title: metadata.properties.name.description,
+          description: metadata.properties.description.description,
           rarity: metadata.properties.rarity.description,
+          filetype: metadata.properties.filetype.description,
           img: metadata.properties.image.description,
+          video: metadata.properties.video.description,
           owner: owner
         }, ...collection];
       }catch {
@@ -137,8 +140,11 @@ const CollectionProvider = props => {
       NFT = {
         id: parseInt(id),
         title: metadata.properties.name.description,
+        description: metadata.properties.description.description,
         rarity: metadata.properties.rarity.description,
+        filetype: metadata.properties.filetype.description,
         img: metadata.properties.image.description,
+        video: metadata.properties.video.description,
         owner: owner
       };
     }catch {
