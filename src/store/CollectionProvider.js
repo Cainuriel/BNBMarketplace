@@ -129,7 +129,7 @@ const CollectionProvider = props => {
   const updateCollectionHandler = async(contract, id, owner) => {
     let NFT;
     const hash = await contract.methods.tokenURI(id).call();
-    console.log('ahi esta ahi esta ', `https://ipfs.infura.io/ipfs/${hash}?clear`);
+    //console.log('ahi esta ahi esta ', `https://ipfs.infura.io/ipfs/${hash}?clear`);
     try {
       const response = await fetch(`https://ipfs.infura.io/ipfs/${hash}?clear`);
       if(!response.ok) {
