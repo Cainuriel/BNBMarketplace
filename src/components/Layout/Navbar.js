@@ -67,10 +67,10 @@ const Navbar = () => {
           {marketplaceCtx.userFunds > 0 && !fundsLoading &&
             <button 
               type="button" 
-              className="btn btn-info btn-block navbar-btn text-white" 
+              className="btn btn-danger btn-block navbar-btn text-white" 
               onClick={claimFundsHandler}
             >          
-              {`CLAIM ${formatPrice(marketplaceCtx.userFunds)} BNB`}
+              {`RECOJA SU DINERO: ${formatPrice(marketplaceCtx.userFunds)} BNB`}
             </button>}
           {fundsLoading &&
             <div class="d-flex justify-content-center text-info">
