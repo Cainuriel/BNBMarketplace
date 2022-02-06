@@ -1,4 +1,4 @@
-///SPDX-License-Identifier: UNLICENSED
+//SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
 /**
@@ -14,10 +14,11 @@ pragma solidity ^0.8.0;
  * 
  **/
 
+ // 0x4B456694bd5c992E0A669586f3d33b5c15794Ebb in testnet 
+
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-// 0x21947a01C76542656EC895205E9f22FeEee2B467 in testnet
 
 contract BNBCollection is ERC721Enumerable, Ownable  
 {   
@@ -29,7 +30,7 @@ contract BNBCollection is ERC721Enumerable, Ownable
     uint256 public alreadySold;
     uint256 public onSale;
     bool public saleIsActive;
-     uint256 public tokenPrice = 100000000000000000; //0.1 BNB
+     uint256 public tokenPrice = 300000000000000000; //0.3 BNB
 
     
       /**

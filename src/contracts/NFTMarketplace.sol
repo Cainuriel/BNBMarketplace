@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import "./BNBCollection.sol";
 
-// 0x98D5A0dd9542fa1333d778394D3d95e7d3a0c407 testnet
+// 0xeCc76531abD264e24B8e01DC55Bd9e6FCA093ca3 testnet
 
 contract NFTMarketplace {
   uint public offerCount;
