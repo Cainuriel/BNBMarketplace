@@ -3,7 +3,7 @@ require('dotenv').config();
 const HDWalletProvider = require('truffle-hdwallet-provider-privkey');
 const privateKey = [process.env.PRIVATE_KEY];
 const apiUrl = process.env.API_URL;
-const etherscanAPI = process.env.ETHERSCAN_API_KEY;
+const etherscanAPIBSC = process.env.ETHERSCAN_API_KEY;
 
 module.exports = {
 
@@ -40,7 +40,7 @@ module.exports = {
     'truffle-plugin-verify'
   ],
   api_keys: {
-    etherscan: etherscanAPI
+    etherscan: etherscanAPIBSC
   },
   // Configure your compilers
   compilers: {
