@@ -10,6 +10,7 @@ import logo from '../../img/logo2.PNG'
 const Main = () => {
   const collectionCtx = useContext(CollectionContext);
   const marketplaceCtx = useContext(MarketplaceContext);
+  const collectionLoaded = collectionCtx.collection.length === parseInt(collectionCtx.totalSupply)
   
   return(
     <div className="container-fluid mt-2">
@@ -23,7 +24,13 @@ const Main = () => {
         </main>
       </div>
       <hr/>
-      {!marketplaceCtx.mktIsLoading && <NFTCollection />}
+      {!collectionLoaded && 
+        <div className="d-flex align-items-center justify-content-center">
+          <div className="spinner-border mr-5 pr-5" role="status" aria-hidden="true"></div>
+          <strong>&nbsp;Buscando en el mercado de NFTs...{collectionCtx.collection.length}/{collectionCtx.totalSupply}</strong>
+        </div>
+      }
+      {!marketplaceCtx.mktIsLoading && <NFTCollection showImages={collectionLoaded} />}
       {marketplaceCtx.mktIsLoading && <Spinner />}
     </div>
   );
