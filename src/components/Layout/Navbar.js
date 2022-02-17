@@ -83,6 +83,21 @@ const Navbar = () => {
           {web3Ctx.account && 
             <a 
               className="nav-link small" 
+              href="https://testnet.binance.org/faucet-smart"
+              target="blank"
+              rel="noopener noreferrer">
+            <button 
+              type="button" 
+              className="btn btn-success text-white" 
+            > 
+              Faucet de BNBs
+            </button>
+            </a>}
+        </div>
+        <div className="navbar-toggler">
+          {web3Ctx.account && 
+            <a 
+              className="nav-link small" 
               href={`${etherscanUrl}/address/${web3Ctx.account}`}
               target="blank"
               rel="noopener noreferrer"
