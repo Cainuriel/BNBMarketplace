@@ -69,60 +69,61 @@ const NFTCollection = () => {
        console.log('objeto NFT', NFT); 
         return(
         
-          <div key={key} className="col-md-3 m-3 py-3 px-3 card border-info">
-            
-            <small>NFT Id: {NFT.id}</small>
-            <small className="">Rareza: {NFT.rarity}</small>
-            <div className={"card-body"}>       
-              <h3 className="card-title">{NFT.title}</h3>
-              
-              <p className="">{NFT.description}</p>
+          <div key={key} className="col-xxl-2 col-xl-3 col-lg-4 col-md-6 py-3 px-3 ">
+            <div className="card border-info h-100">
+              <small>NFT Id: {NFT.id}</small>
+              <small className="">Rareza: {NFT.rarity}</small>
+              <div className={"card-body"}>       
+                <h3 className="card-title">{NFT.title}</h3>
+                
+                <p className="">{NFT.description}</p>
+              </div>
+              {NFT.filetype === "Imagen" ?
+              <img src={`https://ipfs.infura.io/ipfs/${NFT.img}`} className="card-img-bottom" alt={`${NFT.title}`} width="100%" /> 
+              :
+              <video width="100%" autoPlay loop muted>
+                        <source src={`https://ipfs.infura.io/ipfs/${NFT.img}`} type="video/mp4"/>
+                      </video> 
+              }
+              <label>Propietario:</label>
+              <p className="fw-light fs-6"> {`${owner.substr(0,7)}...${owner.substr(owner.length - 7)}`}</p>
+              {index !== -1 ?
+                owner !== web3Ctx.account ?
+                  <div className="row">
+                    <div className="d-grid gap-2 col-5 mx-auto">
+                      <button onClick={buyHandler} value={index} className="btn btn-success">BUY</button>
+                    </div>
+                    <div className="col-7 d-flex justify-content-end">
+                      <img src={eth} width="25" height="25" className="align-center float-start" alt="price icon" ></img>                
+                      <p className="text-start"><b>{`${price}`}</b></p>
+                    </div>
+                  </div> :
+                  <div className="row">
+                    <div className="d-grid gap-2 col-5 mx-auto">
+                      <button onClick={cancelHandler} value={index} className="btn btn-danger">CANCEL</button>
+                    </div>
+                    <div className="col-7 d-flex justify-content-end">
+                      <img src={eth} width="25" height="25" className="align-center float-start" alt="price icon"></img>                
+                      <p className="text-start"><b>{`${price}`}</b></p>
+                    </div>
+                  </div> :
+                owner === web3Ctx.account ?              
+                  <form className="row g-2" onSubmit={(e) => makeOfferHandler(e, NFT.id, key)}>                
+                    <div className="col-5 d-grid gap-2">
+                      <button type="submit" className="btn btn-secondary">OFFER</button>
+                    </div>
+                    <div className="col-7">
+                      <input
+                        type="number"
+                        step="0.01"
+                        placeholder="BNB..."
+                        className="form-control"
+                        ref={priceRefs.current[key]}
+                      />
+                    </div>                                  
+                  </form> :
+                  <p><br/></p>}
             </div>
-            {NFT.filetype === "Imagen" ?
-            <img src={`https://ipfs.infura.io/ipfs/${NFT.img}`} className="card-img-bottom" alt={`${NFT.title}`} /> 
-            :
-            <video width="350" autoPlay loop muted>
-                      <source src={`https://ipfs.infura.io/ipfs/${NFT.img}`} type="video/mp4"/>
-                    </video> 
-            }
-            <label>Propietario:</label>
-            <p className="fw-light fs-6"> {`${owner.substr(0,7)}...${owner.substr(owner.length - 7)}`}</p>
-            {index !== -1 ?
-              owner !== web3Ctx.account ?
-                <div className="row">
-                  <div className="d-grid gap-2 col-5 mx-auto">
-                    <button onClick={buyHandler} value={index} className="btn btn-success">BUY</button>
-                  </div>
-                  <div className="col-7 d-flex justify-content-end">
-                    <img src={eth} width="25" height="25" className="align-center float-start" alt="price icon" ></img>                
-                    <p className="text-start"><b>{`${price}`}</b></p>
-                  </div>
-                </div> :
-                <div className="row">
-                  <div className="d-grid gap-2 col-5 mx-auto">
-                    <button onClick={cancelHandler} value={index} className="btn btn-danger">CANCEL</button>
-                  </div>
-                  <div className="col-7 d-flex justify-content-end">
-                    <img src={eth} width="25" height="25" className="align-center float-start" alt="price icon"></img>                
-                    <p className="text-start"><b>{`${price}`}</b></p>
-                  </div>
-                </div> :
-              owner === web3Ctx.account ?              
-                <form className="row g-2" onSubmit={(e) => makeOfferHandler(e, NFT.id, key)}>                
-                  <div className="col-5 d-grid gap-2">
-                    <button type="submit" className="btn btn-secondary">OFFER</button>
-                  </div>
-                  <div className="col-7">
-                    <input
-                      type="number"
-                      step="0.01"
-                      placeholder="BNB..."
-                      className="form-control"
-                      ref={priceRefs.current[key]}
-                    />
-                  </div>                                  
-                </form> :
-                <p><br/></p>}
           </div>
         );
       })}
