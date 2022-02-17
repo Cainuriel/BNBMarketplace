@@ -7,7 +7,9 @@ import MarketplaceContext from '../../../store/marketplace-context';
 import { formatPrice } from '../../../helpers/utils';
 import eth from '../../../img/bnb.png';
 
-const NFTCollection = () => {
+const nftURL = (nft) => `https://ipfs.infura.io/ipfs/${nft.img}`
+
+const NFTCollection = ({ showImages = true }) => {
   const web3Ctx = useContext(Web3Context);
   const collectionCtx = useContext(CollectionContext);
   const marketplaceCtx = useContext(MarketplaceContext);
@@ -78,12 +80,13 @@ const NFTCollection = () => {
                 
                 <p className="">{NFT.description}</p>
               </div>
-              {NFT.filetype === "Imagen" ?
-              <img src={`https://ipfs.infura.io/ipfs/${NFT.img}`} className="card-img-bottom" alt={`${NFT.title}`} width="100%" /> 
-              :
-              <video width="100%" autoPlay loop muted>
-                        <source src={`https://ipfs.infura.io/ipfs/${NFT.img}`} type="video/mp4"/>
-                      </video> 
+              {showImages && NFT.filetype === "Imagen" &&
+                <img src={nftURL(NFT)} className="card-img-bottom" alt={`${NFT.title}`} width="100%" /> 
+              }
+              {showImages && NFT.filetype === "MP4" &&
+                <video width="100%" autoPlay loop muted>
+                  <source src={nftURL(NFT)} type="video/mp4"/>
+                </video> 
               }
               <label>Propietario:</label>
               <p className="fw-light fs-6"> {`${owner.substr(0,7)}...${owner.substr(owner.length - 7)}`}</p>

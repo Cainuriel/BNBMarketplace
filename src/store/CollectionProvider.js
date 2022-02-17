@@ -119,11 +119,12 @@ const CollectionProvider = props => {
           video: metadata.properties.video.description,
           owner: owner
         }, ...collection];
+        dispatchCollectionAction({type: 'LOADCOLLECTION', collection: collection});
       }catch {
         console.error('Something went wrong');
       }
     }
-    dispatchCollectionAction({type: 'LOADCOLLECTION', collection: collection});     
+    // dispatchCollectionAction({type: 'LOADCOLLECTION', collection: collection});     
   };
 
   const updateCollectionHandler = async(contract, id, owner) => {
