@@ -16,7 +16,7 @@ const Main = () => {
       <div className="row">
         <main role="main" className="col-lg-12 justify-content-center text-center">
           <div className="content mr-auto ml-auto">
-            <img src={logo} alt="logo" width="500" height="140" className="mb-2"/>
+            <img src={logo} alt="logo" width="50%" className="mb-2"/>
             {!collectionCtx.nftIsLoading && <MintForm />}
             {collectionCtx.nftIsLoading && <Spinner />}
           </div>
