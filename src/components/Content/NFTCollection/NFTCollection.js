@@ -72,42 +72,42 @@ const NFTCollection = ({ showImages = true }) => {
         return(
         
           <div key={key} className="col-xxl-2 col-xl-3 col-lg-4 col-md-6 py-3 px-3 ">
-            <div className="card border-info h-100">
-              <small>NFT Id: {NFT.id}</small>
-              <small className="">Rareza: {NFT.rarity}</small>
+            <div className="card border-info h-100 p-3">
+              <div className='d-flex justify-content-between align-items-baseline'>
+                <h5>
+                  <span className="badge bg-warning text-dark">{NFT.id}</span>
+                </h5>
+                <small className="">Rareza: {NFT.rarity}</small>
+              </div>
               <div className={"card-body"}>       
                 <h3 className="card-title">{NFT.title}</h3>
                 
                 <p className="">{NFT.description}</p>
               </div>
-              {showImages && NFT.filetype === "Imagen" &&
-                <img src={nftURL(NFT)} className="card-img-bottom" alt={`${NFT.title}`} width="100%" /> 
-              }
-              {showImages && NFT.filetype === "MP4" &&
-                <video width="100%" autoPlay loop muted>
-                  <source src={nftURL(NFT)} type="video/mp4"/>
-                </video> 
-              }
+              <div className='d-flex justify-content-center'>
+                {showImages && NFT.filetype === "Imagen" &&
+                  <img src={nftURL(NFT)} className="card-img-bottom rounded" alt={`${NFT.title}`} width="100%" /> 
+                }
+                {showImages && NFT.filetype === "MP4" &&
+                  <video className="rounded" width="100%" autoPlay loop muted>
+                    <source src={nftURL(NFT)} type="video/mp4"/>
+                  </video> 
+                }
+              </div>
               <label>Propietario:</label>
               <p className="fw-light fs-6"> {`${owner.substr(0,7)}...${owner.substr(owner.length - 7)}`}</p>
               {index !== -1 ?
-                owner !== web3Ctx.account ?
-                  <div className="row">
+                  <div className="d-flex">
                     <div className="d-grid gap-2 col-5 mx-auto">
-                      <button onClick={buyHandler} value={index} className="btn btn-success">BUY</button>
+                      { owner !== web3Ctx.account ?
+                        <button onClick={buyHandler} value={index} className="btn btn-success">BUY</button>
+                        :
+                        <button onClick={cancelHandler} value={index} className="btn btn-danger">CANCEL</button>
+                      }
                     </div>
-                    <div className="col-7 d-flex justify-content-end">
+                    <div className="col-7 d-flex justify-content-end align-items-center gap-1">
                       <img src={eth} width="25" height="25" className="align-center float-start" alt="price icon" ></img>                
-                      <p className="text-start"><b>{`${price}`}</b></p>
-                    </div>
-                  </div> :
-                  <div className="row">
-                    <div className="d-grid gap-2 col-5 mx-auto">
-                      <button onClick={cancelHandler} value={index} className="btn btn-danger">CANCEL</button>
-                    </div>
-                    <div className="col-7 d-flex justify-content-end">
-                      <img src={eth} width="25" height="25" className="align-center float-start" alt="price icon"></img>                
-                      <p className="text-start"><b>{`${price}`}</b></p>
+                      <strong>{`${price}`}</strong>
                     </div>
                   </div> :
                 owner === web3Ctx.account ?              
