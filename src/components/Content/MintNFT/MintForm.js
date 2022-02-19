@@ -77,7 +77,8 @@ const MintForm = () => {
 
     // Upload file to IPFS and push to the blockchain
     const mintNFT = async() => {
-      // Add file to the IPFS
+      collectionCtx.setNftIsLoading(true); // block button
+        // Add file to the IPFS
       const fileAdded = await ipfs.add(capturedFileBuffer);
       if(!fileAdded) {
         console.error('Something went wrong when updloading the file');
@@ -140,7 +141,7 @@ const MintForm = () => {
   const fileTypeClass = FiletypeIsValid? "form-control" : "form-control is-invalid";
   const fileClass = fileIsValid? "form-control" : "form-control is-invalid";
   const fileClass2 = fileIsValid? "form-control" : "form-control is-invalid";
-  
+
   return(
     <form onSubmit={submissionHandler}>
       <div className="row justify-content-center">
@@ -196,7 +197,7 @@ const MintForm = () => {
           />
         </div>
       </div>
-      <button type='submit' className='btn btn-lg btn-info text-white btn-block'>MINT</button>
+      <button type='submit' disabled={collectionCtx.nftIsLoading} className='btn btn-lg btn-info text-white btn-block'>MINT</button>
     </form>
   );
 };
