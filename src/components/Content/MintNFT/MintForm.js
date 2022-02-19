@@ -77,7 +77,7 @@ const MintForm = () => {
 
     // Upload file to IPFS and push to the blockchain
     const mintNFT = async() => {
-      disabled(); // block button for no more minting in a time
+      collectionCtx.setNftIsLoading(true); // block button
         // Add file to the IPFS
       const fileAdded = await ipfs.add(capturedFileBuffer);
       if(!fileAdded) {
@@ -142,17 +142,6 @@ const MintForm = () => {
   const fileClass = fileIsValid? "form-control" : "form-control is-invalid";
   const fileClass2 = fileIsValid? "form-control" : "form-control is-invalid";
 
-  const btn = document.getElementById("btnMint");
-  
-  const disabled = () => {
-              btn.disabled = true;
-              btn.innerText = 'Wait Malandriner..';
-              setTimeout(()=>{
-                btn.disabled = false;
-                btn.innerText = 'Mint';
-                }, 10000);
-            }
-  
   return(
     <form onSubmit={submissionHandler}>
       <div className="row justify-content-center">
@@ -208,7 +197,7 @@ const MintForm = () => {
           />
         </div>
       </div>
-      <button id='btnMint' type='submit' className='btn btn-lg btn-info text-white btn-block'>MINT</button>
+      <button type='submit' disabled={collectionCtx.nftIsLoading} className='btn btn-lg btn-info text-white btn-block'>MINT</button>
     </form>
   );
 };
