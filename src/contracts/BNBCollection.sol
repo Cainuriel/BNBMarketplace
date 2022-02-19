@@ -14,7 +14,12 @@ pragma solidity ^0.8.0;
  * 
  **/
 
- // 0xEC2b1F41E90590cfc44c090DFdeed9DCb55eE000 in testnet 
+ // 0x1729Bef13f53B4BFB8C4c6e4F618D3c438A5dC3A in testnet for minting tests 
+
+ /** Delete tokenURIs array from original contract
+* @global []TokenURIs
+* 
+*/
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -22,10 +27,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract BNBCollection is ERC721Enumerable, Ownable  
 {   
-    
-
     mapping(address => bool) private  _minters;
-    string[] public tokenURIs; // to listing
     mapping(uint => string) _tokenIdToTokenURI;
     uint256 public alreadySold;
     uint256 public onSale;
@@ -103,7 +105,6 @@ contract BNBCollection is ERC721Enumerable, Ownable
         {
         require(_minters[msg.sender] || balanceOf(msg.sender) != 0, "You don't are allowed for minting");
         uint256 supply = totalSupply();
-         tokenURIs.push(_tokenURI);
         uint _id = supply + 1;
         _tokenIdToTokenURI[_id] = _tokenURI;
 
