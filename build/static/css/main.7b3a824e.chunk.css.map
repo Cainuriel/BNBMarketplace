@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://src/app.css"],"names":[],"mappings":"AAAA,KACI,sBAAsB,CACtB,YACJ,CAEA,KACI,SACJ","file":"main.7b3a824e.chunk.css","sourcesContent":["body {\r\n    background-color:coral;\r\n    height: 100vh;\r\n}\r\n\r\n.red {\r\n    color: red;\r\n}\r\n\r\n"]}
