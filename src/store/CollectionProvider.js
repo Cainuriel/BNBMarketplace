@@ -97,7 +97,7 @@ const CollectionProvider = props => {
 
   const loadCollectionHandler = async(contract, totalSupply) => {
     let collection = [];
-    for(let i = totalSupply; i >= 1; i--) {
+    for(let i = parseInt(totalSupply); i >= 1; i--) {
       const hash = await contract.methods.tokenURI(i).call();
       try {
         const response = await fetch(`https://ipfs.infura.io/ipfs/${hash}?clear`);
