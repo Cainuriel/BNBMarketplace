@@ -58,7 +58,7 @@ const Navbar = () => {
   
   return (
   <nav className="navbar navbar-dark bg-dark">
-    <div class="container-fluid">    
+    <div className="container-fluid">    
         {web3Ctx.account && 
         <div className="navbar-brand">
           <h3 className="text-white">¡Bienvenido Malandriner! </h3>
@@ -73,9 +73,9 @@ const Navbar = () => {
               {`RECOJA SU DINERO: ${formatPrice(marketplaceCtx.userFunds)} BNB`}
             </button>}
           {fundsLoading &&
-            <div class="d-flex justify-content-center text-info">
-              <div class="spinner-border" role="status">
-                <span class="sr-only"></span>
+            <div className="d-flex justify-content-center text-info">
+              <div className="spinner-border" role="status">
+                <span className="sr-only"></span>
               </div>
           </div>}          
         </div>

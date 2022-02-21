@@ -97,7 +97,7 @@ const CollectionProvider = props => {
 
   const loadCollectionHandler = async(contract, totalSupply) => {
     let collection = [];
-    for(let i = 1; i <= totalSupply; i++) {
+    for(let i = totalSupply; i >= 1; i--) {
       const hash = await contract.methods.tokenURI(i).call();
       try {
         const response = await fetch(`https://ipfs.infura.io/ipfs/${hash}?clear`);
@@ -108,7 +108,7 @@ const CollectionProvider = props => {
         const metadata = await response.json();
         const owner = await contract.methods.ownerOf(i).call();
 
-        collection = [{
+        collection = [...collection, {
           id: i,
           title: metadata.properties.name.description,
           description: metadata.properties.description.description,
@@ -117,7 +117,7 @@ const CollectionProvider = props => {
           img: metadata.properties.image.description,
           video: metadata.properties.video.description,
           owner: owner
-        }, ...collection];
+        }];
         dispatchCollectionAction({type: 'LOADCOLLECTION', collection: collection});
       }catch {
         console.error('Something went wrong');
