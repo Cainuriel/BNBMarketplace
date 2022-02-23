@@ -5,7 +5,7 @@ import NFTCollection from './NFTCollection/NFTCollection';
 import CollectionContext from '../../store/collection-context';
 import MarketplaceContext from '../../store/marketplace-context';
 import Spinner from '../Layout/Spinner';
-import logo from '../../img/logo2.PNG';
+import logo from '../../img/malanftdriners.png';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 import MoneyCheckDollarIcon from '../icons/MoneyCheckDollarIcon'
