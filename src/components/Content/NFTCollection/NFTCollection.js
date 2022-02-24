@@ -45,6 +45,10 @@ const NFTCollection = ({ showImages = true, filterType = 'ALL' }) => {
     })
     .on('receipt', (receipt) => {      
       marketplaceCtx.contract.methods.makeOffer(id, enteredPrice).send({ from: web3Ctx.account })
+      .on('receipt', (receipt) => {
+        marketplaceCtx.addOffer(receipt.events.Offer.returnValues);
+        marketplaceCtx.setMktIsLoading(false);
+      })
       .on('error', (error) => {
         window.alert('Something went wrong when pushing to the blockchain');
         marketplaceCtx.setMktIsLoading(false);
@@ -58,6 +62,12 @@ const NFTCollection = ({ showImages = true, filterType = 'ALL' }) => {
     .on('transactionHash', (hash) => {
       marketplaceCtx.setMktIsLoading(true);
     })
+    .on('receipt', (receipt) => {
+      const offer = receipt.events.OfferFilled.returnValues
+      marketplaceCtx.updateOffer(offer.offerId);
+      collectionCtx.updateOwner(offer.id, offer.newOwner);
+      marketplaceCtx.setMktIsLoading(false);
+    })
     .on('error', (error) => {
       window.alert('Something went wrong when pushing to the blockchain');
       marketplaceCtx.setMktIsLoading(false);
@@ -69,6 +79,12 @@ const NFTCollection = ({ showImages = true, filterType = 'ALL' }) => {
     marketplaceCtx.contract.methods.cancelOffer(marketplaceCtx.offers[cancelIndex].offerId).send({ from: web3Ctx.account })
     .on('transactionHash', (hash) => {
       marketplaceCtx.setMktIsLoading(true);
+    })
+    .on('receipt', (receipt) => {
+      const offer = receipt.events.OfferCancelled.returnValues
+      marketplaceCtx.updateOffer(offer.offerId);
+      collectionCtx.updateOwner(offer.id, offer.owner);
+      marketplaceCtx.setMktIsLoading(false);
     })
     .on('error', (error) => {
       window.alert('Something went wrong when pushing to the blockchain');

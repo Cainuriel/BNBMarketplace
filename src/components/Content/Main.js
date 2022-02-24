@@ -21,7 +21,7 @@ const filterOptions = [
 const Main = () => {
   const collectionCtx = useContext(CollectionContext);
   const marketplaceCtx = useContext(MarketplaceContext);
-  const collectionLoaded = collectionCtx.collection.length === parseInt(collectionCtx.totalSupply);
+  const collectionLoaded = collectionCtx.collection.length >= parseInt(collectionCtx.totalSupply);
   const [selectedFilter, setSelectedFilter] = useState('ALL');
   const handleFilterChange = (event) => setSelectedFilter(event.target.value); 
 
