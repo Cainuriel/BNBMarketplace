@@ -16,7 +16,7 @@ const MintForm = () => {
   const [enteredRarity, setEnteredRarity] = useState('');
   const [rarityIsValid, setRarityIsValid] = useState(true);
 
-  const [enteredFiletype, setEnteredFiletype] = useState('');
+  const [enteredFiletype, setEnteredFiletype] = useState('Imagen');
   const [FiletypeIsValid, setFiletypeIsValid] = useState(true);
 
   const [capturedFileBuffer, setCapturedFileBuffer] = useState(null);
@@ -52,18 +52,6 @@ const MintForm = () => {
       setCapturedFileBuffer(Buffer(reader.result));     
     }
   };
-
-  const captureFile2 = (event) => {
-    event.preventDefault();
-
-    const file = event.target.files[0];
-
-    const reader = new window.FileReader();
-    reader.readAsArrayBuffer(file);
-    reader.onloadend = () => {
-      setCapturedFileBuffer(Buffer(reader.result));     
-    }
-  }; 
   
   const submissionHandler = (event) => {
     event.preventDefault();
@@ -81,7 +69,8 @@ const MintForm = () => {
         // Add file to the IPFS
       const fileAdded = await ipfs.add(capturedFileBuffer);
       if(!fileAdded) {
-        console.error('Something went wrong when updloading the file');
+        window.alert('Something went wrong when updloading the file');
+        collectionCtx.setNftIsLoading(false);
         return;
       }
 
@@ -118,13 +107,19 @@ const MintForm = () => {
 
       const metadataAdded = await ipfs.add(JSON.stringify(metadata));
       if(!metadataAdded) {
-        console.error('Something went wrong when updloading the file');
+        window.alert('Something went wrong when updloading the file');
+        collectionCtx.setNftIsLoading(false);
         return;
       }
       
       collectionCtx.contract.methods.safeMint(metadataAdded.path).send({ from: web3Ctx.account })
       .on('transactionHash', (hash) => {
         collectionCtx.setNftIsLoading(true);
+      })
+      .on('receipt', (receipt) => {
+        const transfer = receipt.events.Transfer.returnValues
+        collectionCtx.updateCollection(collectionCtx.contract, transfer.tokenId, transfer.to);
+        collectionCtx.setNftIsLoading(false);
       })
       .on('error', (e) =>{
         window.alert('Something went wrong when pushing to the blockchain');
@@ -140,11 +135,10 @@ const MintForm = () => {
   const rarityClass = rarityIsValid? "form-control" : "form-control is-invalid";
   const fileTypeClass = FiletypeIsValid? "form-control" : "form-control is-invalid";
   const fileClass = fileIsValid? "form-control" : "form-control is-invalid";
-  const fileClass2 = fileIsValid? "form-control" : "form-control is-invalid";
 
   return(
     <form onSubmit={submissionHandler}>
-      <div className="row justify-content-center">
+      <div className="row justify-content-center m-3">
         <div className="col-md-2">
           <input
             type='text'
@@ -175,29 +169,20 @@ const MintForm = () => {
         <div className="col-md-2">
         <label>Seleccione el tipo de archivo</label>
         <select className={`${fileTypeClass} mb-1`} onChange={enteredFiletypeHandler} value={enteredFiletype}>
-                  <option value="null">...</option>
                   <option value="Imagen">Imagen</option>
                   <option value="MP4">MP4</option>
         </select>
         </div>
         <div className="col-md-2">
-        <label>Imagen</label>
+        <label>{enteredFiletype}</label>
           <input
             type='file'
             className={`${fileClass} mb-1`}
             onChange={captureFile}
           />
-        </div>
-        <div className="col-md-2">
-          <label>Mp4</label>
-          <input
-            type='file'
-            className={`${fileClass2} mb-1`}
-            onChange={captureFile2}
-          />
-        </div>
+        </div>        
       </div>
-      <button type='submit' disabled={collectionCtx.nftIsLoading} className='btn btn-lg btn-info text-white btn-block'>MINT</button>
+      <button type='submit' disabled={collectionCtx.nftIsLoading} className='btn btn-lg btn-info text-white btn-block m-2'>MINT</button>
     </form>
   );
 };

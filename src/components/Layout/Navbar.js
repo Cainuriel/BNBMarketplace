@@ -58,7 +58,7 @@ const Navbar = () => {
   
   return (
   <nav className="navbar navbar-dark bg-dark">
-    <div className="container-fluid">    
+    <div className="container-fluid">  
         {web3Ctx.account && 
         <div className="navbar-brand">
           <h3 className="text-white">¡Bienvenido Malandriner! </h3>
