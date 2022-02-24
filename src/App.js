@@ -48,6 +48,7 @@ const App = () => {
         // Load Collection
         collectionCtx.loadCollection(nftContract, totalSupply);       
 
+        // TODO: revisar porque las subscripciones a eventos no se lanzan...de momento lo tratamos directamente en el callback del send de la transacción
         // Event subscription
         nftContract.events.Transfer()
         .on('data', (event) => {
@@ -73,6 +74,7 @@ const App = () => {
         // Load User Funds
         account && marketplaceCtx.loadUserFunds(mktContract, account);
 
+        // TODO: revisar porque las subscripciones a eventos no se lanzan...de momento lo tratamos directamente en el callback del send de la transacción
         // Event OfferFilled subscription 
         mktContract.events.OfferFilled()
         .on('data', (event) => {
