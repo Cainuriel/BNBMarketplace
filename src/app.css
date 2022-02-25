@@ -1,6 +1,5 @@
 body {
-    background-color:coral;
-    height: 100vh;
+    height: 100%;
 }
 
 .red {
@@ -69,4 +68,29 @@ body {
 	 transform: translateX(100%);
 }
  
+.divider {
+	position: relative;
+	display: inline-block;
+	color: #ffc105;
+	padding: 0 20px;
+}
 
+.divider::before {
+	right: 100%;
+	content: "";
+	width: 40%;
+	top: 50%;
+	position: absolute;
+	border-bottom: 3px solid #1BA2F6;
+	border-radius: 30px;
+}
+
+.divider::after {
+	left: 100%;
+	content: "";
+	width: 40%;
+	top: 50%;
+	position: absolute;
+	border-bottom: 3px solid #1BA2F6;
+	border-radius: 30px;
+}
