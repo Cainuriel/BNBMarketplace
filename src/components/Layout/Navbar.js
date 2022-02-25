@@ -28,12 +28,17 @@ const Navbar = () => {
     .on('transactionHash', (hash) => {
       setFundsLoading(true);
     })
+    .on('receipt', (receipt) => {
+      marketplaceCtx.loadUserFunds(marketplaceCtx.contract, web3Ctx.account);
+      setFundsLoading(false);
+    })
     .on('error', (error) => {
       window.alert('Something went wrong when pushing to the blockchain');
       setFundsLoading(false);
     });
   };
 
+  // TODO: revisar porque las subscripciones a eventos no se lanzan...de momento lo tratamos directamente en el callback del send de la transacción
   // Event ClaimFunds subscription 
   marketplaceCtx.contract.events.ClaimFunds()
   .on('data', (event) => {
@@ -63,22 +68,24 @@ const Navbar = () => {
         <div className="navbar-brand">
           <h3 className="text-white">¡Bienvenido Malandriner! </h3>
         </div> }
-        <div className="navbar-toggler">
-          {marketplaceCtx.userFunds > 0 && !fundsLoading &&
-            <button 
-              type="button" 
-              className="btn btn-danger btn-block navbar-btn text-white" 
-              onClick={claimFundsHandler}
-            >          
-              {`RECOJA SU DINERO: ${formatPrice(marketplaceCtx.userFunds)} BNB`}
-            </button>}
-          {fundsLoading &&
-            <div className="d-flex justify-content-center text-info">
-              <div className="spinner-border" role="status">
-                <span className="sr-only"></span>
-              </div>
-          </div>}          
-        </div>
+        {marketplaceCtx.userFunds > 0 &&
+          <div className="navbar-toggler">
+            {!fundsLoading &&
+              <button 
+                type="button" 
+                className="btn btn-danger btn-block navbar-btn text-white" 
+                onClick={claimFundsHandler}
+              >          
+                {`RECOJA SU DINERO: ${formatPrice(marketplaceCtx.userFunds)} BNB`}
+              </button>}
+            {fundsLoading &&
+              <div className="d-flex justify-content-center text-info">
+                <div className="spinner-border" role="status">
+                  <span className="sr-only"></span>
+                </div>
+            </div>}          
+          </div>
+        }
         <div className="navbar-toggler">
           {web3Ctx.account && 
             <a 
