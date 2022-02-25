@@ -37,7 +37,10 @@ const Main = () => {
         </main>
       </div>
       <hr/>
-      <div className="d-flex align-items-center justify-content-center">
+      <div className="d-flex align-items-center justify-content-center m-3">
+        <h2 className="divider"><b>Marketplace</b></h2>
+      </div>
+      <div className="d-flex align-items-center justify-content-center m-2">
         <ButtonGroup onClick={handleFilterChange}>
           {
             filterOptions.map((filter, idx) => 

@@ -182,7 +182,7 @@ const MintForm = () => {
           />
         </div>        
       </div>
-      <button type='submit' disabled={collectionCtx.nftIsLoading} className='btn btn-lg btn-info text-white btn-block m-2'>MINT</button>
+      <button type='submit' disabled={collectionCtx.nftIsLoading} className='btn btn-lg btn-secondary btn-block m-2'>MINT</button>
     </form>
   );
 };
