@@ -101,7 +101,7 @@ const CollectionProvider = props => {
       const hash = await contract.methods.tokenURI(i).call();
       try {
         const response = await fetch(
-          `https://ipfs.io/ipfs/${hash}?clear`
+          `https://nftstorage.link/ipfs/${hash}?clear`
         );
         if(!response.ok) {
           throw new Error('Something went wrong');
@@ -134,7 +134,7 @@ const CollectionProvider = props => {
 
     try {
       const response = await fetch(
-        `https://ipfs.io/ipfs/${hash}?clear`
+        `https://nftstorage.link/ipfs/${hash}?clear`
       );
       if(!response.ok) {
         throw new Error('Something went wrong');      }
