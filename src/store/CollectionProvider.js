@@ -100,7 +100,9 @@ const CollectionProvider = props => {
     for(let i = parseInt(totalSupply); i >= 1; i--) {
       const hash = await contract.methods.tokenURI(i).call();
       try {
-        const response = await fetch(`https://ipfs.infura.io/ipfs/${hash}?clear`);
+        const response = await fetch(
+          `https://ipfs.io/ipfs/${hash}?clear`
+        );
         if(!response.ok) {
           throw new Error('Something went wrong');
         }
@@ -131,7 +133,9 @@ const CollectionProvider = props => {
     const hash = await contract.methods.tokenURI(id).call();
 
     try {
-      const response = await fetch(`https://ipfs.infura.io/ipfs/${hash}?clear`);
+      const response = await fetch(
+        `https://ipfs.io/ipfs/${hash}?clear`
+      );
       if(!response.ok) {
         throw new Error('Something went wrong');      }
 

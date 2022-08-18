@@ -7,7 +7,7 @@ import MarketplaceContext from '../../../store/marketplace-context';
 import { formatPrice } from '../../../helpers/utils';
 import eth from '../../../img/bnb.png';
 
-const nftURL = (nft) => `https://ipfs.infura.io/ipfs/${nft.img}`
+const nftURL = (nft) => `https://ipfs.io/ipfs/${nft.img}`;
 
 const NFTCollection = ({ showImages = true, filterType = 'ALL' }) => {
   const web3Ctx = useContext(Web3Context);
