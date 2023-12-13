@@ -1,6 +1,10 @@
 import { useReducer } from 'react';
-
 import CollectionContext from './collection-context';
+import { ThirdwebStorage } from "@thirdweb-dev/storage";
+const IFPS_API_KEY = process.env.IFPS_API_KEY;
+  const storage = new ThirdwebStorage({
+    secretKey: IFPS_API_KEY, // You can get one from dashboard settings
+  });
 
 const defaultCollectionState = {
   contract: null,
@@ -100,9 +104,7 @@ const CollectionProvider = props => {
     for(let i = parseInt(totalSupply); i >= 1; i--) {
       const hash = await contract.methods.tokenURI(i).call();
       try {
-        const response = await fetch(
-          `https://nftstorage.link/ipfs/${hash}?clear`
-        );
+        const response = await storage.resolveScheme(hash)
         if(!response.ok) {
           throw new Error('Something went wrong');
         }
@@ -134,7 +136,8 @@ const CollectionProvider = props => {
 
     try {
       const response = await fetch(
-        `https://nftstorage.link/ipfs/${hash}?clear`
+        `https://ipfs.thirdwebstorage.com/ipfs//${hash}`,
+        {mode: 'no-cors'}
       );
       if(!response.ok) {
         throw new Error('Something went wrong');      }

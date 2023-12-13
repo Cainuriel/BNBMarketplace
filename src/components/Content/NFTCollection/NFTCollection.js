@@ -6,8 +6,14 @@ import CollectionContext from '../../../store/collection-context';
 import MarketplaceContext from '../../../store/marketplace-context';
 import { formatPrice } from '../../../helpers/utils';
 import eth from '../../../img/bnb.png';
+import { ThirdwebStorage } from "@thirdweb-dev/storage";
+const IFPS_API_KEY = process.env.IFPS_API_KEY;
+  const storage = new ThirdwebStorage({
+    secretKey: IFPS_API_KEY, // You can get one from dashboard settings
+  });
 
-const nftURL = (nft) => `https://nftstorage.link/ipfs/${nft.img}`;
+// const nftURL = (nft) => `https://ipfs.thirdwebstorage.com/ipfs/${nft.img}`;
+  const nftURL = async (nft) => await storage.resolveScheme(nft);
 
 const NFTCollection = ({ showImages = true, filterType = 'ALL' }) => {
   const web3Ctx = useContext(Web3Context);

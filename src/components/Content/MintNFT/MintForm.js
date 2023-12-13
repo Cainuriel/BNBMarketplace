@@ -2,11 +2,16 @@ import { useState, useContext } from 'react';
 import '../../../app.css';
 import Web3Context from '../../../store/web3-context';
 import CollectionContext from '../../../store/collection-context';
+import { ThirdwebStorage } from "@thirdweb-dev/storage";
 
-const ipfsClient = require('ipfs-http-client');
-const ipfs = ipfsClient.create({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
-
+// const ipfsClient = require('ipfs-http-client');
+// const ipfs = ipfsClient.create({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
+const IFPS_API_KEY = process.env.IFPS_API_KEY;
+  const storage = new ThirdwebStorage({
+    secretKey: IFPS_API_KEY, // You can get one from dashboard settings
+  });
 const MintForm = () => {  
+  
   const [enteredName, setEnteredName] = useState('');
   const [descriptionIsValid, setDescriptionIsValid] = useState(true);
 
@@ -67,7 +72,10 @@ const MintForm = () => {
     const mintNFT = async() => {
       collectionCtx.setNftIsLoading(true); // block button
         // Add file to the IPFS
-      const fileAdded = await ipfs.add(capturedFileBuffer);
+        const fileAdded = await storage.upload(capturedFileBuffer);
+        // This will log a URL like ipfs://QmWgbcjKWCXhaLzMz4gNBxQpAHktQK6MkLvBkKXbsoWEEy/0
+        console.info(fileAdded);
+      // const fileAdded = await ipfs.add(capturedFileBuffer);
       if(!fileAdded) {
         window.alert('Something went wrong when updloading the file');
         collectionCtx.setNftIsLoading(false);
@@ -105,7 +113,9 @@ const MintForm = () => {
         }
       };
 
-      const metadataAdded = await ipfs.add(JSON.stringify(metadata));
+      const metadataAdded = await storage.upload(metadata);
+      console.info(metadataAdded);
+      // const metadataAdded = await ipfs.add(JSON.stringify(metadata));
       if(!metadataAdded) {
         window.alert('Something went wrong when updloading the file');
         collectionCtx.setNftIsLoading(false);
@@ -137,56 +147,56 @@ const MintForm = () => {
   const fileClass = fileIsValid? "form-control" : "form-control is-invalid";
 
   return(
-    // <form onSubmit={submissionHandler}>
-    //   <div className="row justify-content-center m-3">
-    //     <div className="col-md-2">
-    //       <input
-    //         type='text'
-    //         className={`${nameClass} mb-1`}
-    //         placeholder='Nombre del NFT...'
-    //         value={enteredName}
-    //         onChange={enteredNameHandler}
-    //       />
-    //     </div>
-    //     <div className="col-md-6">
-    //       <input
-    //         type='text'
-    //         className={`${descriptionClass} mb-1`}
-    //         placeholder='Descripción breve del NTF...'
-    //         value={enteredDescription}
-    //         onChange={enteredDescriptionHandler}
-    //       />
-    //     </div>
-    //     <div className="col-md-4">
-    //       <input
-    //         type='text'
-    //         className={`${rarityClass} mb-1`}
-    //         placeholder='Nº de serie. Ejem: #4 de 10, Único... '
-    //         value={enteredRarity}
-    //         onChange={enteredRarityHandler}
-    //       />
-    //     </div>
-    //     <div className="col-md-2">
-    //     <label>Seleccione el tipo de archivo</label>
-    //     <select className={`${fileTypeClass} mb-1`} onChange={enteredFiletypeHandler} value={enteredFiletype}>
-    //               <option value="Imagen">Imagen</option>
-    //               <option value="MP4">MP4</option>
-    //     </select>
-    //     </div>
-    //     <div className="col-md-2">
-    //     <label>{enteredFiletype}</label>
-    //       <input
-    //         type='file'
-    //         className={`${fileClass} mb-1`}
-    //         onChange={captureFile}
-    //       />
-    //     </div>        
-    //   </div>
-    //   <button type='submit' disabled={collectionCtx.nftIsLoading} className='btn btn-lg btn-secondary btn-block m-2'>MINT</button>
-    // </form>
-    <>
-      <h2 className='text-center'>Deshabilitada la creación de NFTs temporalmente</h2>
-    </>
+    <form onSubmit={submissionHandler}>
+      <div className="row justify-content-center m-3">
+        <div className="col-md-2">
+          <input
+            type='text'
+            className={`${nameClass} mb-1`}
+            placeholder='Nombre del NFT...'
+            value={enteredName}
+            onChange={enteredNameHandler}
+          />
+        </div>
+        <div className="col-md-6">
+          <input
+            type='text'
+            className={`${descriptionClass} mb-1`}
+            placeholder='Descripción breve del NTF...'
+            value={enteredDescription}
+            onChange={enteredDescriptionHandler}
+          />
+        </div>
+        <div className="col-md-4">
+          <input
+            type='text'
+            className={`${rarityClass} mb-1`}
+            placeholder='Nº de serie. Ejem: #4 de 10, Único... '
+            value={enteredRarity}
+            onChange={enteredRarityHandler}
+          />
+        </div>
+        <div className="col-md-2">
+        <label>Seleccione el tipo de archivo</label>
+        <select className={`${fileTypeClass} mb-1`} onChange={enteredFiletypeHandler} value={enteredFiletype}>
+                  <option value="Imagen">Imagen</option>
+                  <option value="MP4">MP4</option>
+        </select>
+        </div>
+        <div className="col-md-2">
+        <label>{enteredFiletype}</label>
+          <input
+            type='file'
+            className={`${fileClass} mb-1`}
+            onChange={captureFile}
+          />
+        </div>        
+      </div>
+      <button type='submit' disabled={collectionCtx.nftIsLoading} className='btn btn-lg btn-secondary btn-block m-2'>MINT</button>
+    </form>
+    // <>
+    //   <h2 className='text-center'>Deshabilitada la creación de NFTs</h2>
+    // </>
   );
 };
 
