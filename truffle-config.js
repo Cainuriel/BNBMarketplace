@@ -3,7 +3,7 @@ require('dotenv').config();
 const HDWalletProvider = require('truffle-hdwallet-provider-privkey');
 const privateKey = [process.env.PRIVATE_KEY];
 const apiUrl = process.env.API_URL;
-const etherscanAPIBSC = process.env.ETHERSCAN_API_KEY;
+// const etherscanAPIBSC = process.env.ETHERSCAN_API_KEY;
 
 module.exports = {
 
@@ -13,6 +13,7 @@ module.exports = {
       port: 7545,
       network_id: "*" //match any network id
     },
+    
     // rinkeby: {
     //   provider: function() {
     //     return new HDWalletProvider(
@@ -31,6 +32,7 @@ module.exports = {
       network_id: 97,
       confirmations: 10,
       timeoutBlocks: 200,
+      networkCheckTimeout: 1000000,
       skipDryRun: true
     },
   },
@@ -39,17 +41,18 @@ module.exports = {
   plugins: [
     'truffle-plugin-verify'
   ],
-  api_keys: {
-    etherscan: etherscanAPIBSC
-  },
+  // api_keys: {
+  //   etherscan: etherscanAPIBSC
+  // },
   // Configure your compilers
   compilers: {
     solc: {
-      optimizer: {
-        enabled: true,
-        runs: 200
-      },
-      version: "^0.8.0" 
+      // optimizer: {
+      //   enabled: true,
+      //   runs: 200
+      // },
+      version: "^0.8.0",
+      evmVersion: "london",
     }
   }
 };
