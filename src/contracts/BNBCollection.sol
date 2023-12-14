@@ -13,9 +13,9 @@ pragma solidity ^0.8.0;
 |__/     |__/ \_______/|__/ \_______/|__/  |__/|__/        \___/ |_______/  \_______/|__/      |__/|__/  |__/ \_______/|__/      
  * 
  **/
-
+// binance-testnet.rpc.thirdweb.com
  // 0xEC2b1F41E90590cfc44c090DFdeed9DCb55eE000 in testnet 
-
+// 0x01Be07e7284948f3AE8E59eAb8d5492c75Dfc788 testnet 14/12/23
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
