@@ -113,7 +113,17 @@ const MintForm = () => {
         }
       };
 
-      const metadataAdded = await storage.upload(metadata);
+      const metadataAdded = await storage.upload(
+        metadata,
+        {
+          alwaysUpload: false, // Optionally, always reupload even if the file already exists
+          onProgress: (progress) => {console.log("subiendo metadata...");}, // Callback that gets triggered when file upload progresses
+          metadata: {}, // Optional metadata to associate with this upload
+          rewriteFileNames: undefined, // If specified, will rewrite file names to numbers for use on-chain. Useful to use with NFT contracts that map token IDs to files.
+          uploadWithGatewayUrl: false, // If specified, any URLs with schemes will be replaced with resolved URLs before upload
+          uploadWithoutDirectory: true, // If specified, will upload a single file without wrapping it in a directory
+        },
+      );
       console.info(metadataAdded);
       // const metadataAdded = await ipfs.add(JSON.stringify(metadata));
       if(!metadataAdded) {
