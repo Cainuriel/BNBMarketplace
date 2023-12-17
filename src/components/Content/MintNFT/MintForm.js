@@ -3,13 +3,16 @@ import '../../../app.css';
 import Web3Context from '../../../store/web3-context';
 import CollectionContext from '../../../store/collection-context';
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
-
+require('dotenv').config()
 // const ipfsClient = require('ipfs-http-client');
 // const ipfs = ipfsClient.create({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
-const IFPS_API_KEY = process.env.IFPS_API_KEY;
+ const IFPS_API_KEY = process.env.IFPS_API_KEY;
+// const CLIENT_ID = process.env.CLIENT_ID;
+ console.log(`IFPS_API_KEY, CLIENT_ID`, IFPS_API_KEY);
   const storage = new ThirdwebStorage({
-    secretKey: IFPS_API_KEY, // You can get one from dashboard settings
+    secretKey: IFPS_API_KEY,
   });
+  
 const MintForm = () => {  
   
   const [enteredName, setEnteredName] = useState('');
@@ -72,7 +75,7 @@ const MintForm = () => {
     const mintNFT = async() => {
       collectionCtx.setNftIsLoading(true); // block button
         // Add file to the IPFS
-        const fileAdded = await storage.upload(capturedFileBuffer);
+        const fileAdded = await storage.upload(capturedFileBuffer,{uploadWithoutDirectory: true});
         // This will log a URL like ipfs://QmWgbcjKWCXhaLzMz4gNBxQpAHktQK6MkLvBkKXbsoWEEy/0
         console.info(fileAdded);
       // const fileAdded = await ipfs.add(capturedFileBuffer);
@@ -155,6 +158,8 @@ const MintForm = () => {
   const rarityClass = rarityIsValid? "form-control" : "form-control is-invalid";
   const fileTypeClass = FiletypeIsValid? "form-control" : "form-control is-invalid";
   const fileClass = fileIsValid? "form-control" : "form-control is-invalid";
+
+
 
   return(
     <form onSubmit={submissionHandler}>
