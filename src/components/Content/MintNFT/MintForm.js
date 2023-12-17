@@ -3,14 +3,14 @@ import '../../../app.css';
 import Web3Context from '../../../store/web3-context';
 import CollectionContext from '../../../store/collection-context';
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
-require('dotenv').config()
+
 // const ipfsClient = require('ipfs-http-client');
 // const ipfs = ipfsClient.create({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
- const IFPS_API_KEY = process.env.IFPS_API_KEY;
+ const REACT_APP_IFPS_API_KEY = process.env.REACT_APP_IFPS_API_KEY;
 // const CLIENT_ID = process.env.CLIENT_ID;
- console.log(`IFPS_API_KEY, CLIENT_ID`, IFPS_API_KEY);
+ console.log(`IFPS_API_KEY, CLIENT_ID`, REACT_APP_IFPS_API_KEY);
   const storage = new ThirdwebStorage({
-    secretKey: IFPS_API_KEY,
+    secretKey: REACT_APP_IFPS_API_KEY,
   });
   
 const MintForm = () => {  
