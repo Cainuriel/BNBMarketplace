@@ -86,7 +86,7 @@ const MintForm = () => {
         },
         uploadWithoutDirectory: true
       });
-      const fileAdded = uploadImage(capturedFileBuffer);
+      const fileAdded = uploadImage({data:capturedFileBuffer});
       console.log(`fileAdded`, fileAdded);
       if(!fileAdded) {
         window.alert('Something went wrong when updloading the file');
@@ -145,7 +145,7 @@ const MintForm = () => {
       // );
       // console.info(metadataAdded);
       // const metadataAdded = await ipfs.add(JSON.stringify(metadata));
-      const metadataAdded =  uploadMetadata(metadata);
+      const metadataAdded =  uploadMetadata({data:metadata});
       console.log(`metadataAdded`, metadataAdded);
       if(!metadataAdded) {
       
