@@ -2,16 +2,16 @@ import { useState, useContext } from 'react';
 import '../../../app.css';
 import Web3Context from '../../../store/web3-context';
 import CollectionContext from '../../../store/collection-context';
-import { ThirdwebStorage } from "@thirdweb-dev/storage";
+import { useStorageUpload } from "@thirdweb-dev/react";
 
 // const ipfsClient = require('ipfs-http-client');
 // const ipfs = ipfsClient.create({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
- const REACT_APP_IFPS_API_KEY = process.env.REACT_APP_IFPS_API_KEY;
-// const CLIENT_ID = process.env.CLIENT_ID;
- console.log(`IFPS_API_KEY, CLIENT_ID`, REACT_APP_IFPS_API_KEY);
-  const storage = new ThirdwebStorage({
-    secretKey: REACT_APP_IFPS_API_KEY,
-  });
+//  const REACT_APP_IFPS_API_KEY = process.env.REACT_APP_IFPS_API_KEY;
+// // const CLIENT_ID = process.env.CLIENT_ID;
+//  console.log(`IFPS_API_KEY, CLIENT_ID`, REACT_APP_IFPS_API_KEY);
+//   const storage = new ThirdwebStorage({
+//     secretKey: REACT_APP_IFPS_API_KEY,
+//   });
   
 const MintForm = () => {  
   
@@ -75,10 +75,19 @@ const MintForm = () => {
     const mintNFT = async() => {
       collectionCtx.setNftIsLoading(true); // block button
         // Add file to the IPFS
-        const fileAdded = await storage.upload(capturedFileBuffer,{uploadWithoutDirectory: true});
-        // This will log a URL like ipfs://QmWgbcjKWCXhaLzMz4gNBxQpAHktQK6MkLvBkKXbsoWEEy/0
-        console.info(fileAdded);
-      // const fileAdded = await ipfs.add(capturedFileBuffer);
+      //   const fileAdded = await storage.upload(capturedFileBuffer,{uploadWithoutDirectory: true});
+      //   // This will log a URL like ipfs://QmWgbcjKWCXhaLzMz4gNBxQpAHktQK6MkLvBkKXbsoWEEy/0
+      //   console.info(fileAdded);
+      // // const fileAdded = await ipfs.add(capturedFileBuffer);
+
+      const { mutateAsync: uploadImage } = useStorageUpload({
+        onProgress: (progress) => {
+          console.log(progress);
+        },
+        uploadWithoutDirectory: true
+      });
+      const fileAdded = uploadImage(capturedFileBuffer);
+      console.log(`fileAdded`, fileAdded);
       if(!fileAdded) {
         window.alert('Something went wrong when updloading the file');
         collectionCtx.setNftIsLoading(false);
@@ -116,20 +125,30 @@ const MintForm = () => {
         }
       };
 
-      const metadataAdded = await storage.upload(
-        metadata,
-        {
-          alwaysUpload: false, // Optionally, always reupload even if the file already exists
-          onProgress: (progress) => {console.log("subiendo metadata...");}, // Callback that gets triggered when file upload progresses
-          metadata: {}, // Optional metadata to associate with this upload
-          rewriteFileNames: undefined, // If specified, will rewrite file names to numbers for use on-chain. Useful to use with NFT contracts that map token IDs to files.
-          uploadWithGatewayUrl: false, // If specified, any URLs with schemes will be replaced with resolved URLs before upload
-          uploadWithoutDirectory: true, // If specified, will upload a single file without wrapping it in a directory
+      const { mutateAsync: uploadMetadata } = useStorageUpload( {
+        onProgress: (progress) => {
+          console.log(progress);
         },
-      );
-      console.info(metadataAdded);
+        uploadWithoutDirectory: true
+      });
+
+      // const metadataAdded = await storage.upload(
+      //   metadata,
+      //   {
+      //     alwaysUpload: false, // Optionally, always reupload even if the file already exists
+      //     onProgress: (progress) => {console.log("subiendo metadata...");}, // Callback that gets triggered when file upload progresses
+      //     metadata: {}, // Optional metadata to associate with this upload
+      //     rewriteFileNames: undefined, // If specified, will rewrite file names to numbers for use on-chain. Useful to use with NFT contracts that map token IDs to files.
+      //     uploadWithGatewayUrl: false, // If specified, any URLs with schemes will be replaced with resolved URLs before upload
+      //     uploadWithoutDirectory: true, // If specified, will upload a single file without wrapping it in a directory
+      //   },
+      // );
+      // console.info(metadataAdded);
       // const metadataAdded = await ipfs.add(JSON.stringify(metadata));
+      const metadataAdded =  uploadMetadata(metadata);
+      console.log(`metadataAdded`, metadataAdded);
       if(!metadataAdded) {
+      
         window.alert('Something went wrong when updloading the file');
         collectionCtx.setNftIsLoading(false);
         return;
