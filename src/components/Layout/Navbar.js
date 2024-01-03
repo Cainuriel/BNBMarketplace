@@ -90,7 +90,7 @@ const Navbar = () => {
           {web3Ctx.account && 
             <a 
               className="nav-link small" 
-              href="https://discord.gg/bnbchain"
+              href="https://testnet.binance.org/faucet-smart"
               target="blank"
               rel="noopener noreferrer">
             <button 

@@ -137,56 +137,53 @@ const MintForm = () => {
   const fileClass = fileIsValid? "form-control" : "form-control is-invalid";
 
   return(
-    // <form onSubmit={submissionHandler}>
-    //   <div className="row justify-content-center m-3">
-    //     <div className="col-md-2">
-    //       <input
-    //         type='text'
-    //         className={`${nameClass} mb-1`}
-    //         placeholder='Nombre del NFT...'
-    //         value={enteredName}
-    //         onChange={enteredNameHandler}
-    //       />
-    //     </div>
-    //     <div className="col-md-6">
-    //       <input
-    //         type='text'
-    //         className={`${descriptionClass} mb-1`}
-    //         placeholder='Descripción breve del NTF...'
-    //         value={enteredDescription}
-    //         onChange={enteredDescriptionHandler}
-    //       />
-    //     </div>
-    //     <div className="col-md-4">
-    //       <input
-    //         type='text'
-    //         className={`${rarityClass} mb-1`}
-    //         placeholder='Nº de serie. Ejem: #4 de 10, Único... '
-    //         value={enteredRarity}
-    //         onChange={enteredRarityHandler}
-    //       />
-    //     </div>
-    //     <div className="col-md-2">
-    //     <label>Seleccione el tipo de archivo</label>
-    //     <select className={`${fileTypeClass} mb-1`} onChange={enteredFiletypeHandler} value={enteredFiletype}>
-    //               <option value="Imagen">Imagen</option>
-    //               <option value="MP4">MP4</option>
-    //     </select>
-    //     </div>
-    //     <div className="col-md-2">
-    //     <label>{enteredFiletype}</label>
-    //       <input
-    //         type='file'
-    //         className={`${fileClass} mb-1`}
-    //         onChange={captureFile}
-    //       />
-    //     </div>        
-    //   </div>
-    //   <button type='submit' disabled={collectionCtx.nftIsLoading} className='btn btn-lg btn-secondary btn-block m-2'>MINT</button>
-    // </form>
-    <>
-      <h2 className='text-center'>Deshabilitada la creación de NFTs temporalmente</h2>
-    </>
+    <form onSubmit={submissionHandler}>
+      <div className="row justify-content-center m-3">
+        <div className="col-md-2">
+          <input
+            type='text'
+            className={`${nameClass} mb-1`}
+            placeholder='Nombre del NFT...'
+            value={enteredName}
+            onChange={enteredNameHandler}
+          />
+        </div>
+        <div className="col-md-6">
+          <input
+            type='text'
+            className={`${descriptionClass} mb-1`}
+            placeholder='Descripción breve del NTF...'
+            value={enteredDescription}
+            onChange={enteredDescriptionHandler}
+          />
+        </div>
+        <div className="col-md-4">
+          <input
+            type='text'
+            className={`${rarityClass} mb-1`}
+            placeholder='Nº de serie. Ejem: #4 de 10, Único... '
+            value={enteredRarity}
+            onChange={enteredRarityHandler}
+          />
+        </div>
+        <div className="col-md-2">
+        <label>Seleccione el tipo de archivo</label>
+        <select className={`${fileTypeClass} mb-1`} onChange={enteredFiletypeHandler} value={enteredFiletype}>
+                  <option value="Imagen">Imagen</option>
+                  <option value="MP4">MP4</option>
+        </select>
+        </div>
+        <div className="col-md-2">
+        <label>{enteredFiletype}</label>
+          <input
+            type='file'
+            className={`${fileClass} mb-1`}
+            onChange={captureFile}
+          />
+        </div>        
+      </div>
+      <button type='submit' disabled={collectionCtx.nftIsLoading} className='btn btn-lg btn-secondary btn-block m-2'>MINT</button>
+    </form>
   );
 };
 
